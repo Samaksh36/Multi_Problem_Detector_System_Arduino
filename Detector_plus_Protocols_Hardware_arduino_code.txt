@@ -1,0 +1,52 @@
+ 
+const int fire=6;
+const int intr=2;
+int fire_sw=0;
+int int_sw=0;
+
+int value=0;
+
+void setup() 
+   { 
+      Serial.begin(9600); 
+      pinMode(fire, OUTPUT);
+      pinMode(intr, OUTPUT);
+      pinMode(7, OUTPUT);
+      pinMode(12, INPUT);
+      pinMode(9,INPUT);
+      digitalWrite (fire, LOW);
+      digitalWrite (intr, LOW);
+      Serial.println("Connection established...");
+   }
+ 
+void loop() 
+   {
+  fire_sw=digitalRead(9);
+  int_sw=digitalRead(12);
+  
+  if(fire_sw==1){
+    tone(7, 7000,9000);delay(9000);}
+  
+ else if(int_sw==1){
+   tone(7,4000,9000);delay(9000);}
+ else{
+  noTone(7);}
+ Serial.println(int_sw);
+    if(Serial.available()>0){
+      value=Serial.read();
+      Serial.print(value);
+     
+     if (value == '1'){
+        digitalWrite (fire, HIGH);
+        digitalWrite(intr, LOW);
+        }
+     
+     else if (value == '0')
+       {
+        digitalWrite (intr, HIGH);
+        digitalWrite(fire, LOW);
+        }
+
+        }
+   }
+   
